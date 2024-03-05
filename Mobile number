@@ -1,19 +1,18 @@
 %{
+#include <stdio.h>
 %}
-
 %%
-
-[6-9][0-9]{9} {printf("\nMobile Number Valid\n");}
-
-.+ {printf("\nMobile Number Invalid\n");}
-
+[6-9][0-9]{9}       printf("Valid mobile number: %s\n", yytext);
+.|\n            printf("invalid mobile number: %S\n",yytext);
 %%
-int yywrap(void) {}
- 
-int main()
-{
-    printf("\nEnter Mobile Number :");
+int yywrap(void) {
+    return 1;
+}
+int main(void) {
+    char input[1000];
+    printf("Enter text: ");
+    scanf("%[^\n]", input);
+    yy_scan_string(input);
     yylex();
-    printf("\n");
     return 0;
 }
